@@ -1,14 +1,46 @@
 import requests
+import ddddocr
+from PIL import Image
+from selenium import webdriver
+from selenium.webdriver.common.by import By
+from selenium.webdriver.common.keys import Keys
+import time
 session = requests.Session()
+ocr = ddddocr.DdddOcr()
 print("===========选课脚本===========")
-cookie_input =input("输入cookie:")
-cookies = {}
-if cookie_input:
-    for item in cookie_input.split(';'):
-        if '=' in item:
-            key, value = item.strip().split('=', 1)
-            cookies[key] = value
-session.cookies.update(cookies)
+username=input("用户名：")
+password=input("密码：")
+
+driver = webdriver.Chrome()
+driver.get("https://cas.nyist.edu.cn/cas/login?service=https%3A%2F%2Fngjw.nyist.edu.cn%2Fadmin%2Fcaslogin")
+
+
+# 用户名
+username_input = driver.find_element(By.ID, "username")
+username_input.send_keys(username)
+
+# 密码
+password_input = driver.find_element(By.ID, "password")
+password_input.send_keys(password)
+
+captcha_img = driver.find_element(By.ID, "captcha_img")
+captcha_img.screenshot("captcha.png")
+
+with open("captcha.png", "rb") as file:
+    captcha = file.read()
+result = ocr.classification(captcha)
+
+captcha_input = driver.find_element(By.ID, "captcha")
+captcha_input.send_keys(result)
+# 登录
+login_btn = driver.find_element(By.XPATH, '//input[@value="登录"]')
+login_btn.click()
+print("当前URL:", driver.current_url)
+cookies = driver.get_cookies()
+
+req_cookies = {c['name']: c['value'] for c in cookies}
+session.cookies.update(req_cookies)
+driver.quit()
 headers={'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.6778.86 Safari/537.36',
          'Accept':'application/json, text/plain, */*',
          'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
