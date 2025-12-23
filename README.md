@@ -23,3 +23,8 @@ pip install requests
 ```bash
 python3 main.py
 ```
+
+***注意***：需要先通过登录获取cookie
+
+先登录，打开f12到网络经行抓包，获取cookie
+![img.png](img.png)
