@@ -19,12 +19,11 @@
 pip install requests
 ```
 
-直接运行
+直接运行，会检查***储存在本地cookie的值***，请妥善保存。若过期，则需要账号密码登录。
 ```bash
 python3 main.py
 ```
 
-***注意***：需要先通过登录获取cookie
-
-先登录，打开f12到网络经行抓包，获取cookie
-![img.png](img.png)
+***注意***：
+1. 需要安装谷歌游览器,运行时会弹出，***请不要关闭***
+2. 在本地生成`cookie.txt`为保存的cookie
