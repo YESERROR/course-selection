@@ -14,7 +14,6 @@ headers={'User-Agent':'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537
          'Content-Type':'application/x-www-form-urlencoded; charset=UTF-8'}
 response = session.post("https://ngjw.nyist.edu.cn/admin/xsd/xk/listV2",headers=headers)
 print(f"\n状态码: {response.status_code}")
-print("响应内容:")
 sports_data = response.json()
 pcid, pcenc = next(iter(sports_data.get('data').get('pcencs').items()))
 getlist={
@@ -22,7 +21,6 @@ getlist={
     'pcid':pcid,
     'pcenc':pcenc
 }
-print(f'getlist:{getlist}')
 headers2={
     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.6778.86 Safari/537.36',
     'Accept': 'application/json, text/plain, */*',
