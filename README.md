@@ -16,7 +16,7 @@
 
 ### 安装依赖
 ```bash
-pip install -r requirements.txt
+pip install ddddocr,selenium,requests
 ```
 
 直接运行，会检查***储存在本地cookie的值***，请妥善保存。若过期，则需要账号密码登录。
